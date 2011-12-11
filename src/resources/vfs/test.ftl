@@ -1,0 +1,1 @@
+Test resource for messagetype.mail
