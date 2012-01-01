@@ -7,11 +7,6 @@ import com.illmeyer.polygraph.core.MessageType;
 public class Mail implements MessageType {
 
 	@Override
-	public void init() {
-		System.out.println("Initialized Message type Mail");
-	}
-
-	@Override
 	public Map<String, Object> createContext() {
 		// TODO Auto-generated method stub
 		return null;
@@ -25,6 +20,11 @@ public class Mail implements MessageType {
 	@Override
 	public String postProcessMessage(String message) {
 		return "Postprocessed: " + message;
+	}
+
+	@Override
+	public void initialize() {
+		System.out.println("Initialized Message type Mail");
 	}
 
 }
