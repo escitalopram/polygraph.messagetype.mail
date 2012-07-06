@@ -2,9 +2,9 @@ package com.illmeyer.polygraph.messagetype.mail;
 
 import java.util.Map;
 
-import com.illmeyer.polygraph.core.Message;
-import com.illmeyer.polygraph.core.MessagePart;
-import com.illmeyer.polygraph.core.MessageType;
+import com.illmeyer.polygraph.core.data.Message;
+import com.illmeyer.polygraph.core.data.MessagePart;
+import com.illmeyer.polygraph.core.spi.MessageType;
 
 import freemarker.core.Environment;
 import freemarker.template.TemplateHashModel;
