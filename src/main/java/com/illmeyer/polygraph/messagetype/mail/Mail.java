@@ -2,7 +2,12 @@ package com.illmeyer.polygraph.messagetype.mail;
 
 import java.util.Map;
 
+import com.illmeyer.polygraph.core.Message;
+import com.illmeyer.polygraph.core.MessagePart;
 import com.illmeyer.polygraph.core.MessageType;
+
+import freemarker.core.Environment;
+import freemarker.template.TemplateHashModel;
 
 public class Mail implements MessageType {
 
@@ -18,13 +23,19 @@ public class Mail implements MessageType {
 	}
 
 	@Override
-	public String postProcessMessage(String message) {
-		return "Postprocessed: " + message;
+	public void initialize() {
+		System.out.println("Initialized Message type Mail");
 	}
 
 	@Override
-	public void initialize() {
-		System.out.println("Initialized Message type Mail");
+	public Message createMessage(String messageText, Environment environment) {
+		Message m = new Message(this.getClass().getName());
+		MessagePart mp = new MessagePart();
+		mp.setStringMessage(messageText);
+		// TODO: Check charset availability and name equality Java vs Mail
+		mp.getProperties().put("Content-Type", "text/plain;charset="+mp.getEncoding());
+		m.getParts().put("main", mp);
+		return m;
 	}
 
 }
