@@ -1,12 +1,15 @@
 package com.illmeyer.polygraph.messagetype.mail.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class MailDescription {
+public class MailDescription implements Serializable {
+
+	private static final long serialVersionUID = -8848181328660915013L;
 	/**
 	 * the address of the author of the mail
 	 */

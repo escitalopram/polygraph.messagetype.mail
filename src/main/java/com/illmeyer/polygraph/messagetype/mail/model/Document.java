@@ -1,12 +1,15 @@
 package com.illmeyer.polygraph.messagetype.mail.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class Document implements Body {
+public class Document implements Body, Serializable {
+
+	private static final long serialVersionUID = 4326881804167628032L;
 	/**
 	 * which message part to use for this document
 	 */
