@@ -7,7 +7,14 @@ import lombok.Data;
 
 @Data
 public class MailDescription {
+	/**
+	 * the address of the author of the mail
+	 */
 	private MailAddress from;
+	/**
+	 * The address of the person that sends the message on behalf of the author
+	 */
+	private MailAddress sender;
 	/**
 	 * list of mail header to recipients 
 	 */
