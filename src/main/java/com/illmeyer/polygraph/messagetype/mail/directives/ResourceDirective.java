@@ -22,8 +22,6 @@ package com.illmeyer.polygraph.messagetype.mail.directives;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
-
 import org.apache.commons.io.output.NullWriter;
 
 import com.illmeyer.polygraph.messagetype.mail.MailConstants;
@@ -60,9 +58,11 @@ public class ResourceDirective implements TemplateDirectiveModel {
 		d.setDisposition(p.get(PTYPE));
 		d.setMimeType(p.get(PMIMETYPE));
 		d.setPartname(p.get(PNAME));
-		d.setContentId(MailEnvironment.createContentId());
+		if (RT_EMBED.equals(p.get(PTYPE))) {
+			d.setContentId(MailEnvironment.createContentId());
+			MailEnvironment.getCidMap(env).put(d.getPartname(), d.getContentId());
+		}
 		((MimeBody)MailEnvironment.getPartStack(env).peek()).getSubElements().add(d);
-		MailEnvironment.getCidMap(env).put(d.getPartname(), d.getContentId());
 		MailEnvironment.getTagStack(env).push(MailConstants.TAG_RESOURCE);
 		MailEnvironment.getPartStack(env).push(d);
 		try {
