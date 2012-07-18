@@ -36,7 +36,7 @@ public class MimeBody implements Body, Serializable {
 	/**
 	 * elements of this aggregate
 	 */
-	private List<Body> subElements;
+	private final List<Body> subElements = new ArrayList<>();
 	/**
 	 * list of additional/changed headers for this mime aggregate
 	 */
