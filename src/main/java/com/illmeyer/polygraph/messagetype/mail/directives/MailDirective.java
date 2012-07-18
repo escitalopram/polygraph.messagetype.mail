@@ -26,6 +26,7 @@ import java.util.Stack;
 
 import org.apache.commons.io.output.NullWriter;
 import com.illmeyer.polygraph.messagetype.mail.MailConstants;
+import com.illmeyer.polygraph.messagetype.mail.MailEnvironment;
 import com.illmeyer.polygraph.messagetype.mail.model.Body;
 import com.illmeyer.polygraph.messagetype.mail.model.Document;
 import com.illmeyer.polygraph.messagetype.mail.model.MailDescription;
@@ -36,8 +37,6 @@ import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
-import freemarker.template.TemplateModelException;
-import freemarker.template.TemplateScalarModel;
 
 public class MailDirective implements TemplateDirectiveModel {
 
@@ -54,13 +53,11 @@ public class MailDirective implements TemplateDirectiveModel {
 		checkContainment(env);
 		Map<String,String> p = processParameters(params,env);
 		MailDescription md = new MailDescription();
-		Stack<Body> partStack = new Stack<>();
-		Stack<String> tagStack = new Stack<>();
+		Stack<Body> partStack = MailEnvironment.getPartStack(env);
+		Stack<String> tagStack = MailEnvironment.getTagStack(env);
 		tagStack.push(MailConstants.TAG_MAIL);
 		env.setCustomAttribute(MailConstants.ECA_INMAIL, Boolean.TRUE);
 		env.setCustomAttribute(MailConstants.ECA_MAILDESC, md);
-		env.setCustomAttribute(MailConstants.ECA_PART_STACK, partStack);
-		env.setCustomAttribute(MailConstants.ECA_TAGSTACK,tagStack);
 		try {
 			if (p.get(PTYPE).equals(MailConstants.MTYPE_SIMPLE)) {
 				env.setCustomAttribute(MailConstants.ECA_MAIL_TYPE, MailConstants.MTYPE_SIMPLE);
@@ -112,10 +109,10 @@ public class MailDirective implements TemplateDirectiveModel {
 
 	private Map<String,String> processParameters(Map<String, Object> params, Environment env) throws TemplateException {
 		Map<String,String> result = new HashMap<>();
-		registerParamStringValue(params, PTYPE, result);
-		registerParamStringValue(params, PSUBTYPE, result);
-		registerParamStringValue(params, PTEXTNAME, result);
-		registerParamStringValue(params, PHTMLNAME, result);
+		MailEnvironment.registerParamStringValue(params, PTYPE, result);
+		MailEnvironment.registerParamStringValue(params, PSUBTYPE, result);
+		MailEnvironment.registerParamStringValue(params, PTEXTNAME, result);
+		MailEnvironment.registerParamStringValue(params, PHTMLNAME, result);
 		if (result.get(PTYPE)==null) throw new TemplateException("mail directive must have a type attribute",env);
 		if (result.get(PTYPE).equals(MailConstants.MTYPE_MIME)) {
 			if (!result.containsKey(PSUBTYPE))
@@ -133,16 +130,6 @@ public class MailDirective implements TemplateDirectiveModel {
 		return result;
 	}
 	
-	private void registerParamStringValue(Map<String,Object> params, String name, Map<String,String> dest) throws TemplateModelException {
-		Object o = params.get(name);
-		if (o instanceof TemplateScalarModel) {
-			String s = ((TemplateScalarModel)o).getAsString();
-			if (s!=null && !s.trim().isEmpty())
-				dest.put(name, s);
-		}
-	}
-
-
 	private void checkContainment(Environment env) throws TemplateException {
 		if (env.getCustomAttribute(MailConstants.ECA_INMAIL)!=null)
 			throw new TemplateException("mail tags cannot be nested",env);
