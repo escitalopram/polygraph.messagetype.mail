@@ -29,6 +29,7 @@ public final class MailConstants {
 	public static final String ECA_PART_STACK="com.illmeyer.polygraph.messagetype.mail.PartStack";
 	public static final String ECA_MAIL_TYPE="com.illmeyer.polygraph.messagetype.mail.MailType";
 	public static final String ECA_TAGSTACK = "com.illmeyer.polygraph.messagetype.mail.TagStack";
+	public static final String ECA_CIDMAP = "com.illmeyer.polygraph.messagetype.mail.CIDMap";
 	
 	/*
 	 * tag names of directives used by this messagetype 
@@ -42,7 +43,9 @@ public final class MailConstants {
 	public static final String TAG_RCPT="rcpt";
 	public static final String TAG_ATTACHMENT="attachment";
 	public static final String TAG_EMBED="embed";
+	public static final String TAG_MIME = "mime";
 	public static final String TAG_RESOURCE="resource";
+	public static final String TAG_LINKEMBEDDED="linkembedded";
 	
 	/*
 	 * keys for message properties used by this messagetype
