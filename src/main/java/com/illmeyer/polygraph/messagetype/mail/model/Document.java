@@ -48,5 +48,9 @@ public class Document implements Body, Serializable {
 	/**
 	 * list of added/changed mail headers for this document
 	 */
+	private String filename;
+	/**
+	 * filename for attachments, optional
+	 */
 	private final List<HeaderEdit> headers = new ArrayList<>();
 }

@@ -58,6 +58,7 @@ public class ResourceDirective implements TemplateDirectiveModel {
 		d.setDisposition(p.get(PTYPE));
 		d.setMimeType(p.get(PMIMETYPE));
 		d.setPartname(p.get(PNAME));
+		d.setFilename(p.get(PFILENAME));
 		if (RT_EMBED.equals(p.get(PTYPE))) {
 			d.setContentId(MailEnvironment.createContentId());
 			MailEnvironment.getCidMap(env).put(d.getPartname(), d.getContentId());
