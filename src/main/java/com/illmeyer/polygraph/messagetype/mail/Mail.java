@@ -32,6 +32,7 @@ import com.illmeyer.polygraph.messagetype.mail.directives.BccDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.CcDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.FromDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.MailDirective;
+import com.illmeyer.polygraph.messagetype.mail.directives.MimeDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.RcptDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.ResourceDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.SenderDirective;
@@ -50,6 +51,7 @@ public class Mail implements MessageType {
 	public Map<String, Object> createContext() {
 		Map<String, Object> result = new HashMap<String,Object>();
 		result.put(MailConstants.TAG_MAIL, new MailDirective());
+		result.put(MailConstants.TAG_MIME, new MimeDirective());
 		result.put(MailConstants.TAG_RESOURCE, new ResourceDirective());
 		result.put(MailConstants.TAG_BCC, new BccDirective());
 		result.put(MailConstants.TAG_CC, new CcDirective());
