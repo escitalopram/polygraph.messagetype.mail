@@ -22,25 +22,39 @@ package com.illmeyer.polygraph.messagetype.mail;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.extern.apachecommons.CommonsLog;
+
+import com.illmeyer.polygraph.core.CoreConstants;
 import com.illmeyer.polygraph.core.data.Message;
 import com.illmeyer.polygraph.core.data.MessagePart;
 import com.illmeyer.polygraph.core.spi.MessageType;
 import com.illmeyer.polygraph.messagetype.mail.directives.BccDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.CcDirective;
+import com.illmeyer.polygraph.messagetype.mail.directives.FromDirective;
+import com.illmeyer.polygraph.messagetype.mail.directives.MailDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.RcptDirective;
+import com.illmeyer.polygraph.messagetype.mail.directives.SenderDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.ToDirective;
+import com.illmeyer.polygraph.messagetype.mail.model.Body;
+import com.illmeyer.polygraph.messagetype.mail.model.Document;
+import com.illmeyer.polygraph.messagetype.mail.model.MailDescription;
+import com.illmeyer.polygraph.messagetype.mail.model.MimeBody;
 
 import freemarker.core.Environment;
 
+@CommonsLog
 public class Mail implements MessageType {
 
 	@Override
 	public Map<String, Object> createContext() {
 		Map<String, Object> result = new HashMap<String,Object>();
-		result.put("bcc", new BccDirective());
-		result.put("cc", new CcDirective());
-		result.put("rcpt", new RcptDirective());
-		result.put("to", new ToDirective());
+		result.put(MailConstants.TAG_MAIL, new MailDirective());
+		result.put(MailConstants.TAG_BCC, new BccDirective());
+		result.put(MailConstants.TAG_CC, new CcDirective());
+		result.put(MailConstants.TAG_RCPT, new RcptDirective());
+		result.put(MailConstants.TAG_TO, new ToDirective());
+		result.put(MailConstants.TAG_FROM, new FromDirective());
+		result.put(MailConstants.TAG_SENDER,new SenderDirective());
 		return result;
 	}
 
@@ -55,12 +69,26 @@ public class Mail implements MessageType {
 
 	@Override
 	public Message createMessage(String messageText, Environment environment) {
-		Message m = new Message(this.getClass().getName());
-		MessagePart mp = new MessagePart();
-		mp.setStringMessage(messageText);
-		// TODO: Check charset availability and name equality Java vs Mail
-		mp.getProperties().put("Content-Type", "text/plain;charset="+mp.getEncoding());
-		m.getParts().put("main", mp);
-		return m;
+		MailDescription md = (MailDescription) environment.getCustomAttribute(MailConstants.ECA_MAILDESC);
+		Message msg = new Message(getClass().getName());
+		msg.getProperties().put(MailConstants.MP_MAILDESC, md);
+		@SuppressWarnings("unchecked")
+		Map<String, MessagePart> allParts = (Map<String, MessagePart>) environment.getCustomAttribute(CoreConstants.ECA_PARTS);
+		if (allParts==null) {
+			// TODO throw some exception
+			log.error("will not create empty message");
+			return null;
+		}
+		registerParts(msg,md.getRootElement(),allParts);
+		return msg;
+	}
+
+	private void registerParts(Message msg, Body body, Map<String, MessagePart> allParts) {
+		if (body instanceof MimeBody) { 
+			for(Body b : ((MimeBody) body).getSubElements()) registerParts(msg, b, allParts);
+		} else {
+			Document d = (Document) body;
+			msg.getParts().put(d.getPartname(), allParts.get(d.getPartname()));
+		}
 	}
 }
