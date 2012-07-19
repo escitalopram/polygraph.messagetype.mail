@@ -54,6 +54,10 @@ public class MailDescription implements Serializable {
 	 */
 	private final List<String> recipients = new ArrayList<>();
 	/**
+	 * subject of the mail
+	 */
+	private String subject;
+	/**
 	 * list of additional mail headers
 	 */
 	private final List<HeaderEdit> headers = new ArrayList<>();
