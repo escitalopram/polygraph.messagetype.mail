@@ -47,6 +47,7 @@ public final class MailConstants {
 	public static final String TAG_RESOURCE="resource";
 	public static final String TAG_LINKEMBEDDED="linkembedded";
 	public static final String TAG_SUBJECT = "subject";
+	public static final String TAG_HEADER = "header";
 	
 	/*
 	 * keys for message properties used by this messagetype
