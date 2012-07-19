@@ -58,10 +58,6 @@ public class MailDescription implements Serializable {
 	 */
 	private String subject;
 	/**
-	 * list of additional mail headers
-	 */
-	private final List<HeaderEdit> headers = new ArrayList<>();
-	/**
 	 * content of the mail
 	 */
 	private Body rootElement;
