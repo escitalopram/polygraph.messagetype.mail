@@ -32,6 +32,7 @@ import com.illmeyer.polygraph.messagetype.mail.directives.BccDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.CcDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.FromDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.HeaderDirective;
+import com.illmeyer.polygraph.messagetype.mail.directives.LinkEmbeddedDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.MailDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.MimeDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.RcptDirective;
@@ -63,6 +64,7 @@ public class Mail implements MessageType {
 		result.put(MailConstants.TAG_SENDER,new SenderDirective());
 		result.put(MailConstants.TAG_SUBJECT, new SubjectDirective());
 		result.put(MailConstants.TAG_HEADER, new HeaderDirective());
+		result.put(MailConstants.TAG_LINKEMBEDDED, new LinkEmbeddedDirective());
 		return result;
 	}
 
