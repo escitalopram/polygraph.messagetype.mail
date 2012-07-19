@@ -36,6 +36,7 @@ import com.illmeyer.polygraph.messagetype.mail.directives.MimeDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.RcptDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.ResourceDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.SenderDirective;
+import com.illmeyer.polygraph.messagetype.mail.directives.SubjectDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.ToDirective;
 import com.illmeyer.polygraph.messagetype.mail.model.Body;
 import com.illmeyer.polygraph.messagetype.mail.model.Document;
@@ -59,6 +60,7 @@ public class Mail implements MessageType {
 		result.put(MailConstants.TAG_TO, new ToDirective());
 		result.put(MailConstants.TAG_FROM, new FromDirective());
 		result.put(MailConstants.TAG_SENDER,new SenderDirective());
+		result.put(MailConstants.TAG_SUBJECT, new SubjectDirective());
 		return result;
 	}
 
