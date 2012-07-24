@@ -22,11 +22,13 @@ package com.illmeyer.polygraph.messagetype.mail;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Getter;
 import lombok.extern.apachecommons.CommonsLog;
 
 import com.illmeyer.polygraph.core.CoreConstants;
 import com.illmeyer.polygraph.core.data.Message;
 import com.illmeyer.polygraph.core.data.MessagePart;
+import com.illmeyer.polygraph.core.data.VersionNumber;
 import com.illmeyer.polygraph.core.spi.MessageType;
 import com.illmeyer.polygraph.messagetype.mail.directives.BccDirective;
 import com.illmeyer.polygraph.messagetype.mail.directives.CcDirective;
@@ -49,6 +51,9 @@ import freemarker.core.Environment;
 
 @CommonsLog
 public class Mail implements MessageType {
+	
+	@Getter
+	private final VersionNumber versionNumber = new VersionNumber(0, 1, 0);
 
 	@Override
 	public Map<String, Object> createContext() {
