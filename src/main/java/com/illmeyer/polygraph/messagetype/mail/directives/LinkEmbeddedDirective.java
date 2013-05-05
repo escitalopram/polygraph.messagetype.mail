@@ -32,6 +32,7 @@ import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 
+@Deprecated
 public class LinkEmbeddedDirective implements TemplateDirectiveModel {
 
 	private static final String PNAME="name";

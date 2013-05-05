@@ -22,6 +22,7 @@ package com.illmeyer.polygraph.messagetype.mail.directives;
 import com.illmeyer.polygraph.messagetype.mail.model.MailAddress;
 import com.illmeyer.polygraph.messagetype.mail.model.MailDescription;
 
+@Deprecated
 public class ToDirective extends AbstractAddressDirective {
 
 	@Override

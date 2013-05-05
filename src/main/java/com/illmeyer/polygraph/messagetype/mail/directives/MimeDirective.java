@@ -36,6 +36,7 @@ import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 
+@Deprecated
 public class MimeDirective implements TemplateDirectiveModel {
 
 	private static final String PTYPE = "type";

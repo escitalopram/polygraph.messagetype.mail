@@ -30,22 +30,24 @@ import com.illmeyer.polygraph.core.data.Message;
 import com.illmeyer.polygraph.core.data.MessagePart;
 import com.illmeyer.polygraph.core.data.VersionNumber;
 import com.illmeyer.polygraph.core.spi.MessageType;
-import com.illmeyer.polygraph.messagetype.mail.directives.BccDirective;
-import com.illmeyer.polygraph.messagetype.mail.directives.CcDirective;
-import com.illmeyer.polygraph.messagetype.mail.directives.FromDirective;
-import com.illmeyer.polygraph.messagetype.mail.directives.HeaderDirective;
-import com.illmeyer.polygraph.messagetype.mail.directives.LinkEmbeddedDirective;
-import com.illmeyer.polygraph.messagetype.mail.directives.MailDirective;
-import com.illmeyer.polygraph.messagetype.mail.directives.MimeDirective;
-import com.illmeyer.polygraph.messagetype.mail.directives.RcptDirective;
-import com.illmeyer.polygraph.messagetype.mail.directives.ResourceDirective;
-import com.illmeyer.polygraph.messagetype.mail.directives.SenderDirective;
-import com.illmeyer.polygraph.messagetype.mail.directives.SubjectDirective;
-import com.illmeyer.polygraph.messagetype.mail.directives.ToDirective;
 import com.illmeyer.polygraph.messagetype.mail.model.Body;
 import com.illmeyer.polygraph.messagetype.mail.model.Document;
 import com.illmeyer.polygraph.messagetype.mail.model.MailDescription;
 import com.illmeyer.polygraph.messagetype.mail.model.MimeBody;
+import com.illmeyer.polygraph.messagetype.mail.tags.BccTag;
+import com.illmeyer.polygraph.messagetype.mail.tags.CcTag;
+import com.illmeyer.polygraph.messagetype.mail.tags.FromTag;
+import com.illmeyer.polygraph.messagetype.mail.tags.HeaderTag;
+import com.illmeyer.polygraph.messagetype.mail.tags.LinkEmbeddedTag;
+import com.illmeyer.polygraph.messagetype.mail.tags.MailTag;
+import com.illmeyer.polygraph.messagetype.mail.tags.MimeTag;
+import com.illmeyer.polygraph.messagetype.mail.tags.RcptTag;
+import com.illmeyer.polygraph.messagetype.mail.tags.ResourceTag;
+import com.illmeyer.polygraph.messagetype.mail.tags.SenderTag;
+import com.illmeyer.polygraph.messagetype.mail.tags.SubjectTag;
+import com.illmeyer.polygraph.messagetype.mail.tags.ToTag;
+import com.illmeyer.polygraph.template.DefaultTagFactory;
+import com.illmeyer.polygraph.template.TagAdapter;
 
 import freemarker.core.Environment;
 
@@ -58,18 +60,18 @@ public class Mail implements MessageType {
 	@Override
 	public Map<String, Object> createContext() {
 		Map<String, Object> result = new HashMap<String,Object>();
-		result.put(MailConstants.TAG_MAIL, new MailDirective());
-		result.put(MailConstants.TAG_MIME, new MimeDirective());
-		result.put(MailConstants.TAG_RESOURCE, new ResourceDirective());
-		result.put(MailConstants.TAG_BCC, new BccDirective());
-		result.put(MailConstants.TAG_CC, new CcDirective());
-		result.put(MailConstants.TAG_RCPT, new RcptDirective());
-		result.put(MailConstants.TAG_TO, new ToDirective());
-		result.put(MailConstants.TAG_FROM, new FromDirective());
-		result.put(MailConstants.TAG_SENDER,new SenderDirective());
-		result.put(MailConstants.TAG_SUBJECT, new SubjectDirective());
-		result.put(MailConstants.TAG_HEADER, new HeaderDirective());
-		result.put(MailConstants.TAG_LINKEMBEDDED, new LinkEmbeddedDirective());
+		new TagAdapter(new DefaultTagFactory(MailTag.class)).register(result);
+		new TagAdapter(new DefaultTagFactory(MimeTag.class)).register(result);
+		new TagAdapter(new DefaultTagFactory(ResourceTag.class)).register(result);
+		new TagAdapter(new DefaultTagFactory(BccTag.class)).register(result);
+		new TagAdapter(new DefaultTagFactory(CcTag.class)).register(result);
+		new TagAdapter(new DefaultTagFactory(RcptTag.class)).register(result);
+		new TagAdapter(new DefaultTagFactory(ToTag.class)).register(result);
+		new TagAdapter(new DefaultTagFactory(FromTag.class)).register(result);
+		new TagAdapter(new DefaultTagFactory(SenderTag.class)).register(result);
+		new TagAdapter(new DefaultTagFactory(SubjectTag.class)).register(result);
+		new TagAdapter(new DefaultTagFactory(HeaderTag.class)).register(result);
+		new TagAdapter(new DefaultTagFactory(LinkEmbeddedTag.class)).register(result);
 		return result;
 	}
 

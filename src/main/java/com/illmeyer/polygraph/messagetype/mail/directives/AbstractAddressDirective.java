@@ -33,6 +33,7 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateScalarModel;
 
+@Deprecated
 public abstract class AbstractAddressDirective implements TemplateDirectiveModel {
 
 	@Override
