@@ -102,7 +102,7 @@ public class JavaMailDispatcher implements MessageDispatcher {
 					mbp.removeHeader(he.getName());
 					break;
 				}
-			} catch (Exception e) {
+			} catch (UnsupportedEncodingException e) {
 				throw new RuntimeException("never happens",e);
 			}
 		}
