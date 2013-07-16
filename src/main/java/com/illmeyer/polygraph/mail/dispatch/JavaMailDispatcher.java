@@ -75,7 +75,7 @@ public class JavaMailDispatcher implements MessageDispatcher {
 		if (d.getFilename()!=null)
 			mbp.setFileName(d.getFilename());
 		if (d.getDisposition() != null) 
-			mbp.setDisposition(d.getDisposition()+"ed");
+			mbp.setDisposition(d.getDisposition().toString());
 		if (d.getContentId()!=null && mbp instanceof MimeBodyPart) 
 			((MimeBodyPart)mbp).setContentID("<"+d.getContentId()+">");
 		String mtype = d.getMimeType();

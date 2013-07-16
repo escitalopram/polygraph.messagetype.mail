@@ -26,6 +26,7 @@ import org.apache.commons.io.output.NullWriter;
 import lombok.Getter;
 
 import com.illmeyer.polygraph.messagetype.mail.MailEnvironment;
+import com.illmeyer.polygraph.messagetype.mail.model.Disposition;
 import com.illmeyer.polygraph.messagetype.mail.model.Document;
 import com.illmeyer.polygraph.messagetype.mail.model.MimeBody;
 import com.illmeyer.polygraph.messagetype.mail.tags.MailTag.MailType;
@@ -38,13 +39,8 @@ import com.illmeyer.polygraph.template.TagParameter;
 @TagInfo(name="resource",nestable=false)
 public class ResourceTag implements PolygraphTag {
 
-	public static enum ResourceType {
-		attach,
-		embed
-	}
-	
 	@TagParameter(optional=true) @Getter
-	ResourceType type;
+	Disposition type;
 	
 	@TagParameter @Getter
 	String name;
@@ -66,14 +62,14 @@ public class ResourceTag implements PolygraphTag {
 				throw new PolygraphTemplateException("must specify type attribute below mail tags of type 'simple'");
 			env.requireParentTag(MailTag.class);
 		}
-		if (type==ResourceType.attach && fileName==null)
+		if (type==Disposition.attachment && fileName==null)
 			throw new PolygraphTemplateException("attached resources need a filename");
 		Document d = new Document();
-		if (type!=null) d.setDisposition(type.toString());
+		if (type!=null) d.setDisposition(type);
 		d.setMimeType(mimeType);
 		d.setPartname(name);
 		d.setFilename(fileName);
-		if(type==ResourceType.embed) {
+		if(type==Disposition.inline) {
 			d.setContentId(MailEnvironment.createContentId());
 			m.getCidMap().put(d.getPartname(), d.getContentId());
 		}
